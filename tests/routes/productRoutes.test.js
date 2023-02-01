@@ -2,10 +2,10 @@ const app = require("../../api/server");
 const request = require("supertest");
 
 let server;
-const userId = 99;
+const productId = 99;
 
 beforeEach(() => {
-  const port = 3000;
+  const port = 3001;
   server = app.listen(port);
 });
 
@@ -13,10 +13,10 @@ afterEach(() => {
   server.close();
 });
 
-describe("GET /users", () => {
-  it("Deve retornar uma lista de usuários em formato JSON", async () => {
+describe("GET /products", () => {
+  it("Deve retornar uma lista de produtos em formato JSON", async () => {
     const response = await request(app)
-      .get("/users")
+      .get("/products")
       .set("Accept", "application/json")
       .expect("content-type", /json/)
       .expect(200);
@@ -25,14 +25,14 @@ describe("GET /users", () => {
       expect.objectContaining({
         id: expect.any(Number),
         name: expect.any(String),
-        tax: expect.any(Number),
+        price: expect.any(Number),
       })
     );
   });
 });
 
-describe("GET /users/id", () => {
-  it("Deve retornar o usuário selecionado", async () => {
-    await request(app).get(`/users/${userId}`).expect(200);
+describe("GET /products/id", () => {
+  it("Deve retornar o produto selecionado", async () => {
+    await request(app).get(`/products/${productId}`).expect(200);
   });
 });
