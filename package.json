@@ -4,7 +4,11 @@
   "description": "API de orçamento que retorna uma listagem de usuários e produtos, assim como um orçamento baseado na taxa do usuário selecionado e no valor dos produtos escolhidos.",
   "main": "./api/server/index.js",
   "scripts": {
-    "server": "nodemon ./api/server/index.js"
+    "server": "nodemon ./api/server/index.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:verbose": "node --experimental-vm-modules node_modules/jest/bin/jest.js --verbose",
+    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
+    "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
   },
   "repository": {
     "type": "git",
@@ -18,7 +22,8 @@
   "homepage": "https://github.com/xLucaspx/BE-test-api#readme",
   "devDependencies": {
     "jest": "^29.4.1",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "supertest": "^6.3.3"
   },
   "dependencies": {
     "axios": "^1.3.0",
