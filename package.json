@@ -1,0 +1,26 @@
+{
+  "name": "be-test-api",
+  "version": "1.0.0",
+  "description": "API de orçamento que retorna uma listagem de usuários e produtos, assim como um orçamento baseado na taxa do usuário selecionado e no valor dos produtos escolhidos.",
+  "main": "./api/server/index.js",
+  "scripts": {
+    "server": "nodemon ./api/server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xLucaspx/BE-test-api.git"
+  },
+  "author": "Lucas da Paz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xLucaspx/BE-test-api/issues"
+  },
+  "homepage": "https://github.com/xLucaspx/BE-test-api#readme",
+  "devDependencies": {
+    "jest": "^29.4.1",
+    "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
