@@ -1,10 +1,8 @@
-const express = require("express");
-const routes = require('../../api/routes');
+const app = require("../server");
 const request = require("supertest");
 
-const app = express();
 const port = 3001;
-routes(app);
+const userId = 42;
 
 let server;
 beforeEach(() => {
@@ -14,8 +12,6 @@ beforeEach(() => {
 afterEach(() => {
   server.close();
 });
-
-const userId = 42;
 
 describe("GET /users", () => {
   it("Deve retornar uma lista de usuários em formato JSON", async () => {

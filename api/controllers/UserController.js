@@ -1,12 +1,10 @@
-const axios = require("axios").default;
+const { UserServices } = require("../services");
+const userServices = new UserServices();
 
 class UserController {
   static async getUsers(req, res) {
     try {
-      const users = await axios
-        .get("https://mockend.com/xLucaspx/BE-test-api/users")
-        .then((res) => res.data);
-
+      const users = await userServices.getRecords();
       return res.status(200).json(users);
     } catch (error) {
       return res.status(500).json(error.message);
@@ -17,10 +15,7 @@ class UserController {
     const { id } = req.params;
 
     try {
-      const user = await axios
-        .get(`https://mockend.com/xLucaspx/BE-test-api/users/${id}`)
-        .then((res) => res.data);
-
+      const user = await userServices.getOneRecord(id);
       return res.status(200).json(user);
     } catch (error) {
       return res.status(404).json(error.message);
