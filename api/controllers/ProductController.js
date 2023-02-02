@@ -1,11 +1,10 @@
-const axios = require("axios");
+const { ProductServices } = require("../services");
+const productServices = new ProductServices();
 
 class ProductController {
   static async getProducts(req, res) {
     try {
-      const products = await axios
-        .get("https://mockend.com/xLucaspx/BE-test-api/products")
-        .then((res) => res.data);
+      const products = await productServices.getRecords();
 
       return res.status(200).json(products);
     } catch (error) {
@@ -17,13 +16,11 @@ class ProductController {
     const { id } = req.params;
 
     try {
-      const product = await axios
-        .get(`https://mockend.com/xLucaspx/BE-test-api/products/${id}`)
-        .then((res) => res.data);
+      const product = await productServices.getOneRecord(id);
 
       return res.status(200).json(product);
     } catch (error) {
-      return res.status(500).json(message);
+      return res.status(500).json(error.message);
     }
   }
 }
