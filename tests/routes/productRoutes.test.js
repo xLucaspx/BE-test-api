@@ -1,17 +1,21 @@
-const app = require("../../api/server");
+const express = require("express");
+const routes = require('../../api/routes');
 const request = require("supertest");
 
-let server;
-const productId = 99;
+const app = express();
+const port = 3002;
+routes(app);
 
+let server;
 beforeEach(() => {
-  const port = 3001;
   server = app.listen(port);
 });
 
 afterEach(() => {
   server.close();
 });
+
+const productId = 42;
 
 describe("GET /products", () => {
   it("Deve retornar uma lista de produtos em formato JSON", async () => {
