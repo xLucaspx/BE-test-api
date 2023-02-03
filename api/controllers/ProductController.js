@@ -13,10 +13,10 @@ class ProductController {
   }
 
   static async getProductById(req, res) {
-    const { id } = req.params;
+    const { productId } = req.params;
 
     try {
-      const product = await productServices.getOneRecord(id);
+      const product = await productServices.getOneRecord(productId);
 
       return res.status(200).json(product);
     } catch (error) {

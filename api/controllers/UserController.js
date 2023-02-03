@@ -12,11 +12,23 @@ class UserController {
   }
 
   static async getUserById(req, res) {
-    const { id } = req.params;
+    const { userId } = req.params;
 
     try {
-      const user = await userServices.getOneRecord(id);
+      const user = await userServices.getOneRecord(userId);
       return res.status(200).json(user);
+    } catch (error) {
+      return res.status(404).json(error.message);
+    }
+  }
+
+  static async getPurchaseValue(req, res) {
+    const { userId } = req.params;
+    const { productIds } = req.query;
+
+    try {
+      const value = await userServices.getTotalValue(productIds, userId);
+      return res.status(200).json({ valor: `R$ ${value}` });
     } catch (error) {
       return res.status(404).json(error.message);
     }
