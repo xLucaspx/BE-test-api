@@ -5,6 +5,7 @@ const router = Router();
 
 router
   .get("/users", UserController.getUsers)
-  .get("/users/:id", UserController.getUserById);
+  .get("/users/:userId", UserController.getUserById)
+  .get("/users/:userId/products?", UserController.getPurchaseValue);
 
 module.exports = router;
