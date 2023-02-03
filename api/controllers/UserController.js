@@ -19,9 +19,7 @@ class UserController {
       const user = await userServices.getOneRecord(userId);
       return res.status(200).json(user);
     } catch (error) {
-      return res
-        .status(404)
-        .json({ erro: `Id de usuário não encontrado: ${userId}` });
+      return res.status(404).json(`Id de usuário não encontrado: ${userId}`);
     }
   }
 
