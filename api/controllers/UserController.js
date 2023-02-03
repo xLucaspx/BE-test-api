@@ -5,6 +5,7 @@ class UserController {
   static async getUsers(req, res) {
     try {
       const users = await userServices.getRecords();
+
       return res.status(200).json(users);
     } catch (error) {
       return res.status(500).json(error.message);
@@ -18,7 +19,9 @@ class UserController {
       const user = await userServices.getOneRecord(userId);
       return res.status(200).json(user);
     } catch (error) {
-      return res.status(404).json(error.message);
+      return res
+        .status(404)
+        .json({ erro: `Id de usuário não encontrado: ${userId}` });
     }
   }
 

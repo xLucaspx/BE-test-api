@@ -35,4 +35,8 @@ describe("GET /products/id", () => {
   it("Deve retornar o produto selecionado", async () => {
     await request(app).get(`/products/${productId}`).expect(200);
   });
+
+  it("Deve responder com código 404", async () => {
+    await request(app).get("/products/000").expect(404);
+  });
 });

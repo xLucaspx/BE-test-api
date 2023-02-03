@@ -3,6 +3,7 @@ const request = require("supertest");
 
 const port = 3001;
 const userId = 42;
+const productIds = "2,7,15,21,42,55,68,35,99";
 
 let server;
 beforeEach(() => {
@@ -34,5 +35,29 @@ describe("GET /users", () => {
 describe("GET /users/id", () => {
   it("Deve retornar o usuário selecionado", async () => {
     await request(app).get(`/users/${userId}`).expect(200);
+  });
+
+  it("Deve responder com código 404", async () => {
+    await request(app).get("/users/000").expect(404);
+  });
+});
+
+describe("GET /users/id/products?productIds", () => {
+  it("Deve retornar o valor dos produtos", async () => {
+    await request(app)
+      .get(`/users/${userId}/products?productIds=${productIds}`)
+      .expect(200);
+  });
+
+  it("Deve responder com código 404 - Usuário não encontrado", async () => {
+    await request(app)
+      .get(`/users/000/products?productIds=${productIds}`)
+      .expect(404);
+  });
+
+  it("Deve responder com código 404 - Produto não encontrado", async () => {
+    await request(app)
+      .get(`/users/${userId}/products?=0`)
+      .expect(404);
   });
 });

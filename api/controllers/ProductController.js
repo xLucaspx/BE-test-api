@@ -20,7 +20,7 @@ class ProductController {
 
       return res.status(200).json(product);
     } catch (error) {
-      return res.status(500).json(error.message);
+      return res.status(404).json({erro: `Id de produto não encontrado: ${productId}`});
     }
   }
 }
