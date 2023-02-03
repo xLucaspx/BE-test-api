@@ -9,15 +9,23 @@ class UserServices extends Services {
   }
 
   async getTaxValue(id) {
-    const user = await this.getOneRecord(id);
-    return Number(user.tax) / 100;
+    try {
+      const user = await this.getOneRecord(id);
+      return Number(user.tax) / 100;
+    } catch (error) {
+      throw new Error(`Id de usuário não encontrado: ${id}`);
+    }
   }
 
   async getTotalValue(productIds, userId) {
-    const prices = await this.productServices.getListOfPrices(productIds);
-    const tax = await this.getTaxValue(userId);
+    try {
+      const prices = await this.productServices.getPrices(productIds);
+      const tax = await this.getTaxValue(userId);
 
-    return sumPrices(prices, tax);
+      return sumPrices(prices, tax);
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 }
 

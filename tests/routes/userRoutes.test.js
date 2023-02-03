@@ -57,7 +57,7 @@ describe("GET /users/id/products?productIds", () => {
 
   it("Deve responder com código 404 - Produto não encontrado", async () => {
     await request(app)
-      .get(`/users/${userId}/products?=0`)
+      .get(`/users/${userId}/products?=000`)
       .expect(404);
   });
 });
