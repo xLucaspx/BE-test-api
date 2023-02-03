@@ -1,8 +1,5 @@
 const { UserServices } = require("../services");
-const { ProductServices } = require("../services");
-const sumPrices = require("../utils/sumPrices");
 const userServices = new UserServices();
-const productServices = new ProductServices();
 
 class UserController {
   static async getUsers(req, res) {
@@ -30,11 +27,8 @@ class UserController {
     const { productIds } = req.query;
 
     try {
-      const prices = await productServices.getListOfPrices(productIds);
-      const tax = await userServices.getTaxValue(userId);
-      const finalValue = sumPrices(prices, tax);
-
-      return res.status(200).json({ valor: `R$ ${finalValue}` });
+      const value = await userServices.getTotalValue(productIds, userId);
+      return res.status(200).json({ valor: `R$ ${value}` });
     } catch (error) {
       return res.status(404).json(error.message);
     }
