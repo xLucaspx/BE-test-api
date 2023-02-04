@@ -14,7 +14,7 @@ afterEach(() => {
 });
 
 describe("GET /products", () => {
-  it("Deve retornar uma lista de produtos em formato JSON", async () => {
+  it("Must return a list of products in JSON format", async () => {
     const response = await request(app)
       .get("/products")
       .set("Accept", "application/json")
@@ -32,11 +32,21 @@ describe("GET /products", () => {
 });
 
 describe("GET /products/id", () => {
-  it("Deve retornar o produto selecionado", async () => {
-    await request(app).get(`/products/${productId}`).expect(200);
+  it("Must return the corresponding product", async () => {
+    const response = await request(app)
+      .get(`/products/${productId}`)
+      .expect(200);
+
+    expect(response.body).toEqual(
+      expect.objectContaining({
+        id: productId,
+        name: expect.any(String),
+        price: expect.any(Number),
+      })
+    );
   });
 
-  it("Deve responder com código 404", async () => {
+  it("Must respond with status 404", async () => {
     await request(app).get("/products/000").expect(404);
   });
 });
