@@ -1,3 +1,4 @@
+const NotFoundError = require("../errors/NotFoundError");
 const { ProductServices } = require("../services");
 const productServices = new ProductServices();
 
@@ -20,7 +21,9 @@ class ProductController {
 
       return res.status(200).json(product);
     } catch (error) {
-      return res.status(404).json({erro: `Id de produto não encontrado: ${productId}`});
+      return res
+        .status(error instanceof NotFoundError ? 404 : 500)
+        .json(`Erro ao buscar produto: ${error.message}`);
     }
   }
 }

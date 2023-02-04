@@ -1,3 +1,4 @@
+const NotFoundError = require("../errors/NotFoundError");
 const { UserServices } = require("../services");
 const userServices = new UserServices();
 
@@ -19,7 +20,9 @@ class UserController {
       const user = await userServices.getOneRecord(userId);
       return res.status(200).json(user);
     } catch (error) {
-      return res.status(404).json(`Id de usuário não encontrado: ${userId}`);
+      return res
+        .status(error instanceof NotFoundError ? 404 : 500)
+        .json(`Erro ao buscar usuário: ${error.message}`);
     }
   }
 
@@ -31,7 +34,9 @@ class UserController {
       const value = await userServices.getTotalValue(productIds, userId);
       return res.status(200).json({ valor: `R$ ${value}` });
     } catch (error) {
-      return res.status(404).json(error.message);
+      return res
+        .status(error instanceof NotFoundError ? 404 : 500)
+        .json(error.message);
     }
   }
 }

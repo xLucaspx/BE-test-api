@@ -1,3 +1,4 @@
+const NotFoundError = require("../errors/NotFoundError");
 const Services = require("./Services");
 
 class ProductServices extends Services {
@@ -15,7 +16,15 @@ class ProductServices extends Services {
         const product = await this.getOneRecord(productIds[i]);
         prices.push(Number(product.price));
       } catch (error) {
-        throw new Error(`Id de produto não encontrado: ${productIds[i]}`);
+        if (error instanceof NotFoundError) {
+          throw new NotFoundError(
+            `Erro ao buscar produto: ${error.message}`,
+            {
+              cause: error,
+            }
+          );
+        }
+        throw error;
       }
     }
     return prices;

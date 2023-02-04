@@ -1,9 +1,9 @@
 function sumPrices(prices, tax) {
   let sum = 0;
 
-  prices.forEach((price) => (sum += price * tax));
+  prices.forEach((price) => (sum += price));
 
-  return sum.toFixed(2);
+  return (sum * tax).toFixed(2);
 }
 
 module.exports = sumPrices;

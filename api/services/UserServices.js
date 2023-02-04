@@ -1,3 +1,4 @@
+const NotFoundError = require("../errors/NotFoundError");
 const sumPrices = require("../utils/sumPrices");
 const ProductServices = require("./ProductServices");
 const Services = require("./Services");
@@ -13,7 +14,12 @@ class UserServices extends Services {
       const user = await this.getOneRecord(id);
       return Number(user.tax) / 100;
     } catch (error) {
-      throw new Error(`Id de usuário não encontrado: ${id}`);
+      if (error instanceof NotFoundError) {
+        throw new NotFoundError(`Erro ao buscar usuário: ${error.message}`, {
+          cause: error,
+        });
+      }
+      throw error;
     }
   }
 
@@ -24,7 +30,7 @@ class UserServices extends Services {
 
       return sumPrices(prices, tax);
     } catch (error) {
-      throw new Error(error.message);
+      throw error;
     }
   }
 }
