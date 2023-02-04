@@ -16,7 +16,9 @@ class Services {
       return await axios.get(url).then((res) => res.data);
     } catch (error) {
       if (error.response && error.response.status == 404) {
-        throw new NotFoundError(`O ID ${id} não foi encontrado!`, { cause: error });
+        throw new NotFoundError(`O ID ${id} não foi encontrado!`, {
+          cause: error,
+        });
       }
       throw error;
     }
