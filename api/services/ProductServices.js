@@ -6,7 +6,8 @@ class ProductServices extends Services {
     super("http://localhost:3000/products");
   }
 
-  // ids must be a comma separated list (id1,id2,id3,...)
+  /* this receives a string of comma separated ids (id1,id2,id3,...)
+  and returns and array of prices corresponding to each product id */
   async getPrices(ids) {
     const productIds = ids.split(",");
     const prices = [];
@@ -17,12 +18,9 @@ class ProductServices extends Services {
         prices.push(Number(product.price));
       } catch (error) {
         if (error instanceof NotFoundError) {
-          throw new NotFoundError(
-            `Erro ao buscar produto: ${error.message}`,
-            {
-              cause: error,
-            }
-          );
+          throw new NotFoundError(`Erro ao buscar produto: ${error.message}`, {
+            cause: error,
+          });
         }
         throw error;
       }

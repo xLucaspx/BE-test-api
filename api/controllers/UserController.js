@@ -28,7 +28,7 @@ class UserController {
 
   static async getPurchaseValue(req, res) {
     const { userId } = req.params;
-    const { productIds } = req.query;
+    const { productIds } = req.query; // productIds must be comma separated (id1,id2,id3,...)
 
     try {
       const value = await userServices.getTotalValue(productIds, userId);

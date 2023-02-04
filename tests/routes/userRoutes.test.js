@@ -15,7 +15,7 @@ afterEach(() => {
 });
 
 describe("GET /users", () => {
-  it("Deve retornar uma lista de usuários em formato JSON", async () => {
+  it("Must return a list of users in JSON format", async () => {
     const response = await request(app)
       .get("/users")
       .set("Accept", "application/json")
@@ -33,29 +33,39 @@ describe("GET /users", () => {
 });
 
 describe("GET /users/id", () => {
-  it("Deve retornar o usuário selecionado", async () => {
-    await request(app).get(`/users/${userId}`).expect(200);
+  it("Must return the corresponding user", async () => {
+    const response = await request(app).get(`/users/${userId}`).expect(200);
+
+    expect(response.body).toEqual(
+      expect.objectContaining({
+        id: userId,
+        name: expect.any(String),
+        tax: expect.any(Number),
+      })
+    );
   });
 
-  it("Deve responder com código 404", async () => {
+  it("Must respond with status 404", async () => {
     await request(app).get("/users/000").expect(404);
   });
 });
 
 describe("GET /users/id/products?productIds", () => {
-  it("Deve retornar o valor dos produtos", async () => {
-    await request(app)
+  it("Must return the final value in BRL", async () => {
+    const response = await request(app)
       .get(`/users/${userId}/products?productIds=${productIds}`)
       .expect(200);
+
+    expect(response.body.valor).toMatch(/R\$ \d+,\d{2}/);
   });
 
-  it("Deve responder com código 404 - Usuário não encontrado", async () => {
+  it("Must respond with status 404 - User not found", async () => {
     await request(app)
       .get(`/users/000/products?productIds=${productIds}`)
       .expect(404);
   });
 
-  it("Deve responder com código 404 - Produto não encontrado", async () => {
+  it("Must respond with status 404 - Product not found", async () => {
     await request(app)
       .get(`/users/${userId}/products?productIds=000`)
       .expect(404);

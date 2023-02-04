@@ -9,6 +9,7 @@ class UserServices extends Services {
     this.productServices = new ProductServices();
   }
 
+  // returns the percentage tax value
   async getTaxValue(id) {
     try {
       const user = await this.getOneRecord(id);
@@ -23,12 +24,15 @@ class UserServices extends Services {
     }
   }
 
+  /* this must receive a comma separated list of product ids and
+  an user id; returns the sum of the product prices multiplied by
+  the user tax value (in percentage) */
   async getTotalValue(productIds, userId) {
     try {
       const prices = await this.productServices.getPrices(productIds);
       const tax = await this.getTaxValue(userId);
 
-      return sumPrices(prices, tax);
+      return sumPrices(prices, tax).toString().replace(".", ",");
     } catch (error) {
       throw error;
     }
